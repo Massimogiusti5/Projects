@@ -1,2 +1,5 @@
 #vscode
 .vscode
+
+#for mac
+.DS_Store
