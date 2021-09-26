@@ -2,7 +2,7 @@ var fs = require('fs');
 var comparisons1=0;
 var comparisons2=0;
 var array = [];
-var temp = fs.readFileSync('nums.txt', 'utf8').split('\n');
+var temp = fs.readFileSync('quicksort.txt', 'utf8').split('\n');
 for (i=0; i<temp.length;i++){
     array[i] = parseInt(temp[i]);
 }

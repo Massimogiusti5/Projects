@@ -1,24 +1,37 @@
+//globals
 var array = [];
 var debug = false;
 var attempts=10;
 var minResult=Number.MAX_VALUE;
+var file = 'data.txt';
 
-for (var i=0; i< attempts; i++) {
-    getData();    
-    result=collapseEdge();
-    console.log("attempt %s : %s \t min so far: %s",i,result,minResult);
-    if (minResult > result) minResult=result;
+/*
+ * Main gets data and runs n trials
+ * Outputs lowest result
+*/
+function main(){
+    for (var i=0; i< attempts; i++) {
+        getData(file);    
+        result=collapseEdge();
+        console.log("attempt %s : %s \t min so far: %s",i,result,minResult);
+        if (minResult > result) minResult=result;
+    }
+    console.log("the mincut is: " + minResult);
 }
-console.log("the mincut is: " + minResult);
 
+//Log functions for debug mode
 function log(s) {
     if (debug) console.log(s);
 }
-
 function logTable(s) {
     if (debug) console.table(s);
 }
 
+/* 
+ * Parses graph into a 2D array
+ * Input: number of nodes
+ * Output: array representing graph
+ */ 
 function makeArray(size){
     var array = [];
     for(var i = 0; i<=size-1; i++){
@@ -27,17 +40,30 @@ function makeArray(size){
     return array;
 }
 
-function getData(){
+/*
+ * Reads file and calls makeArray to parse data
+ * Input: file name (global variable)
+ * Output: N/A
+ */
+
+function getData(file){
     var fs = require('fs');
-    var graph = fs.readFileSync('minCuts.txt', 'utf8').split('\n');
+    //Data is parsed split first by new line for each index, then by tab for each element
+    var graph = fs.readFileSync(file, 'utf8').split('\n');
     array = makeArray(graph.length);
     for(var i = 0; i < array.length; i++){
         var temp = (graph[i].split('\t'));
         for(var j = 1; j < temp.length; j++){
+            //Pointers to other nodes is represented by a 1 in the array
             array[i][temp[j]-1] += 1;
         }
     }
 }
+
+/*
+ * collapseEdge runs the main algorithm on the array
+ * Output: last standing node in array after cuts
+ */
 
 function collapseEdge(){
     var size = array.length;
@@ -67,3 +93,5 @@ function collapseEdge(){
     }
     return (array[0][1]);
 }
+
+main();
