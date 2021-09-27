@@ -5,6 +5,7 @@ function main(){
     testCase(loadTestCaseFromFile(10));
     testCase(loadTestCaseFromFile(100));
     testCase(loadTestCaseFromFile(1000));
+    testCase(loadTestCaseFromFile(10000));
 }
 
 /* 
@@ -35,8 +36,7 @@ function swap(array, a,b){
  
 
 /*
- * Recursive sorting function, partitions around median then recurses on adjacent sub-arrays
- * Assume partitioned element is sorted & complexity of partitioning is O(n)
+ * Recursive sorting function, partitions around random index then recurses on adjacent sub-arrays
  * Input: array<int>, value of first and last indeces
  * Output: sorted array
  * Base Case: 1 element array
